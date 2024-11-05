@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  laravel.test:
+    image: laravelsail/php82-composer:latest
+    ports:
+      - 80:80
+    environment:
+      - WWWGROUP=1000
+      - WWWUSER=1000
+    volumes:
+      - .:/var/www/html
+    networks:
+      - sail
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+    networks:
+      - sail
+
+networks:
+  sail:
+    driver: bridge
